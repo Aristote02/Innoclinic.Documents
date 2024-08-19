@@ -1,0 +1,35 @@
+version: '3.4'
+
+services:
+  documents.api:
+    image: ${DOCKER_REGISTRY-}documentsapi
+    build:
+      context: .
+      dockerfile: Documents.API/Dockerfile
+    depends_on:
+      - azurite
+    networks:
+      - innoclinic
+
+  azurite:
+    image: mcr.microsoft.com/azure-storage/azurite:latest
+    command: azurite --loose --blobHost 0.0.0.0 --blobPort 10020 --queueHost 0.0.0.0 --queuePort 10021 --tableHost 0.0.0.0 --tablePort 10022
+    hostname: azurite
+    container_name: documents-storage
+    ports:
+      - 10020:10020
+      - 10021:10021
+      - 10022:10022
+    volumes:
+       - azuriteData:/data
+    restart: on-failure
+    networks:
+      - innoclinic
+
+volumes:
+  azuriteData:
+
+networks:
+  innoclinic:
+    external:
+      name: innoclinic  

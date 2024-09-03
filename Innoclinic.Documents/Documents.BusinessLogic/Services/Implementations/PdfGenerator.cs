@@ -1,4 +1,5 @@
 ﻿using Documents.BusinessLogic.Services.Interfaces;
+using Innoclinic.Shared.MessageBrokers.Messages;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
@@ -18,8 +19,6 @@ public class PdfGenerator : IPdfGenerator
 	/// <returns>A byte array representing the generated PDF file</returns>
 	public byte[] GeneratePdfFile(AppointmentResultCreatedMessage pdfUpload)
 	{
-		QuestPDF.Settings.License = LicenseType.Community;
-
 		var pdfFile = Document.Create(container =>
 		{
 			container.Page(page =>

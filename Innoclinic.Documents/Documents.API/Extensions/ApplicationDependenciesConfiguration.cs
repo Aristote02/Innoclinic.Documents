@@ -4,6 +4,8 @@ using Documents.API.Consumers;
 using Documents.BusinessLogic.Configurations;
 using Documents.BusinessLogic.Services.Implementations;
 using Documents.BusinessLogic.Services.Interfaces;
+using Documents.BusinessLogic.Validators;
+using FluentValidation;
 using Innoclinic.Shared.MessageBrokers.Configurations;
 using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -21,7 +23,7 @@ public static class ApplicationDependenciesConfiguration
 	/// <summary>
 	/// Adds the services of the application
 	/// </summary>
-	/// <param name="builder"></param>
+	/// <param name="services"></param>
 	public static IServiceCollection AddServices(this IServiceCollection services)
 	{
 		return services.AddScoped<IDocumentService, DocumentService>()
@@ -144,7 +146,12 @@ public static class ApplicationDependenciesConfiguration
 	public static IServiceCollection ConfigureMassTransit(this IServiceCollection services,
 		IConfiguration configuration)
 	{
-		services.AddOptions<RabbitMQConfigurations>().Bind(configuration.GetSection("RabbitMQ"));
+		services.AddScoped<IValidator<RabbitMQConfigurations>, RabbitMQConfigurationsValidator>();
+
+		services.AddOptions<RabbitMQConfigurations>()
+			.Bind(configuration.GetSection("RabbitMQ"))
+			.ValidateFluentValidation()
+			.ValidateOnStart();
 
 		services.AddMassTransit(x =>
 		{

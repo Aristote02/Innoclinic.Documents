@@ -8,6 +8,7 @@ using Innoclinic.Shared.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System.Net.Mime;
 
 namespace Documents.BusinessLogic.Services.Implementations;
 
@@ -126,11 +127,11 @@ public class DocumentService : IDocumentService
 	/// </summary>
 	/// <param name="appointmentResultId">The appointment result id</param>
 	/// <param name="pdfFile">The byte array of the PDF file</param>
-	public async Task UploadPdfAsync(string appointmentResultId, byte[] pdfFile)
+	public async Task UploadPdfAsync(string appointmentResultId, byte[] pdfFile, CancellationToken cancellationToken)
 	{
 		var blobClient = _blobClientFactory.CreateBlobClient($"{_blobContainerClient.Uri}/{appointmentResultId}");
 		using var stream = new MemoryStream(pdfFile);
-		await blobClient.UploadAsync(stream, new BlobHttpHeaders { ContentType = "application/pdf" });
+		await blobClient.UploadAsync(stream, new BlobHttpHeaders { ContentType = MediaTypeNames.Application.Pdf }, cancellationToken: cancellationToken);
 		_logger.LogInformation("PDF uploaded to blob storage successfully: {documentUrl}", appointmentResultId);
 	}
 }

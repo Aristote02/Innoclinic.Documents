@@ -1,4 +1,5 @@
 ﻿using Documents.BusinessLogic.Services.Interfaces;
+using Innoclinic.Shared.MessageBrokers.Messages;
 using MassTransit;
 
 namespace Documents.API.Consumers;
@@ -44,7 +45,7 @@ public class PdfCreatedConsumer : IConsumer<AppointmentResultCreatedMessage>
 
 		var pdf = _pdfGenerator.GeneratePdfFile(message);
 
-		await _documentService.UploadPdfAsync(documentUrl, pdf);
+		await _documentService.UploadPdfAsync(documentUrl, pdf, context.CancellationToken);
 
 		_logger.LogInformation("PDF uploaded successfully for Result id: {ResultId}", context.Message.ResultId);
 	}

@@ -1,7 +1,11 @@
 using Documents.API.Extensions;
 using Documents.API.Middlewares;
+using QuestPDF.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Set the QuestPDF license type
+QuestPDF.Settings.License = LicenseType.Community;
 
 // Add services to the container.
 
@@ -14,8 +18,6 @@ builder.ConfigureJwtAuthentication()
 	.ConfigureBlobStorageServices(builder.Configuration)
 	.ConfigureMassTransit(builder.Configuration)
 	.ConfigureSwaggerGen();
-
-
 
 var app = builder.Build();
 

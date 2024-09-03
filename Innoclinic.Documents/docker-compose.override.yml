@@ -4,11 +4,11 @@ services:
   documents.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_URLS=https://+:443;http://+:8080
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/home/app/.aspnet/https/Offices.API.pfx
       - ASPNETCORE_Kestrel__Certificates__Default__Password=innoclinicoffice
     ports:
-      - "80"
+      - "8080"
       - "443"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro

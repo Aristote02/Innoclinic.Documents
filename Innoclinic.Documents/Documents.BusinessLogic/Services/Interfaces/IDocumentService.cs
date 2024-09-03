@@ -14,7 +14,7 @@ public interface IDocumentService
 	/// <param name="appointmentResultId">The appointment result id</param>
 	/// <param name="pdfFile">The byte array of the PDF file</param>
 	/// <returns></returns>
-	Task UploadPdfAsync(string appointmentResultId, byte[] pdfFile);
+	Task UploadPdfAsync(string appointmentResultId, byte[] pdfFile, CancellationToken cancellationToken);
 
 	/// <summary>
 	/// Retrieves a document from Blob Storage by its documentUrl

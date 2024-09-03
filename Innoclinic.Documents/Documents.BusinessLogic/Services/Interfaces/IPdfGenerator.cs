@@ -1,4 +1,6 @@
-﻿namespace Documents.BusinessLogic.Services.Interfaces;
+﻿using Innoclinic.Shared.MessageBrokers.Messages;
+
+namespace Documents.BusinessLogic.Services.Interfaces;
 
 /// <summary>
 /// Represents and interface for generating PDF files

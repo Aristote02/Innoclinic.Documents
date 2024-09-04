@@ -8,9 +8,6 @@ services:
       dockerfile: Documents.API/Dockerfile
     depends_on:
       - azurite
-    ports:
-      - "5141:8080"
-      - "57222:443"
     networks:
       - innoclinic
     container_name: documents-api-container

@@ -9,8 +9,7 @@ EXPOSE 433
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Documents.API/Documents.API.csproj", "Documents.API/"]
-COPY ["Documents.BusinessLogic/Documents.BusinessLogic.csproj", "Documents.BusinessLogic/"]
+COPY ["Innoclinic.Documents/Innoclinic.Documents/.", "./"]
 RUN dotnet restore "./Documents.API/Documents.API.csproj"
 COPY . .
 WORKDIR "/src/Documents.API"
